@@ -1,0 +1,81 @@
+<div class="container">
+    <img id="burger-img" src="assets/img/burger.png">
+
+    <div id="burger-list">
+        <ul class="list-group">
+            {{#each burgers}}
+            <li class="list-group-item">
+                <p>
+                    {{this.id}}. {{this.burger}}
+
+                    <button data-burger="{{this.burger}}" data-burgerid="{{this.id}}"  type="submit" class="devour-burger">Devour it!</button>
+                </p>
+            </li>
+            {{/each}}
+        </ul>
+
+    </div>
+    <div id="devoured-burgers-list">
+          
+    </div>
+    
+    <form id="add-burger">
+        <div id="burger_search">
+            <textarea type="text" name="burger"></textarea>
+            {{!-- <input id="burger-search-bar" type="text" placeholder=""> --}}
+            <br>
+            <br>
+            <button id="search-btn" type="submit" class="btn btn-primary">Submit</button>
+            <br>
+            <br>
+            <h4>Enter a burger you want to eat and press "Submit" ! </h4>
+        </div>
+    </form>
+
+
+</div>
+
+<script>
+
+    $("#add-burger").on("submit", function (event) {
+        // Make sure to preventDefault on a submit event.
+        event.preventDefault();
+
+        var newBurger = {
+            burger: $("#add-burger [name=burger]").val().trim()
+        };
+
+        // Send the POST request.
+        $.ajax("/", {
+            type: "POST",
+            data: newBurger
+        }).then(
+            function () {
+                console.log("added new burger");
+                // Reload the page to get the updated list
+                location.reload();
+            }
+        );
+    });
+
+
+
+   /// Find a way to move the devoured burger from left to right.
+
+    $(".devour-burger").on("click", function(event) {
+        console.log("clicked")
+    var id = $(this).data("burgerid");
+    var burger = $(this).data("burger");
+    
+    var burgerDevourlist = $("<div>");
+        burgerDevourlist.addClass("burger-devoured-list list-group ");
+        burgerDevourlist.text(id + "-" + burger);
+
+       $("#devoured-burgers-list").append(burgerDevourlist);
+       
+       });
+
+  
+
+
+</script>
