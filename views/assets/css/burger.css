@@ -17,9 +17,12 @@ body{
 }
 
 #devoured-burgers-list{
-    background-color: wheat;
+    background-color: white;
     float: right;
+    
 }
+
+
 
 #burger-img{
     margin-left: 2%;
